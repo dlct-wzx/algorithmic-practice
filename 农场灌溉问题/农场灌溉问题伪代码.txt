@@ -1,0 +1,37 @@
+//回溯
+dfs(x , y)
+    map[x][y].visit = 1
+    for i in 1 to 4
+    //遍历四个方向
+        new_x = x + wh[i][0]
+        new_y = y + wh[i][1]
+        if map[x][y].visit = 0
+            if constraint_space(new_x , new_y) 
+                if constraint_connect(x, y, new_x, new_y, i)
+                //对于未访问、不越界、灌溉渠连通的结点进行搜索
+                    dfs(new_x, new_y, i)
+
+//约束条件：是否越界
+constraint_space(x , y)
+    if x < 0 || x > n
+        return fasle
+    if y < 0 || y > m
+        return fasle
+    return true
+
+//约束条件：是否连通
+constraint_connect(x, y, new_x, new_y, i)
+    switch i
+    0   //顶部对底部
+        map[x][y].top & map[new_x][new_y].bottom
+            return true
+    1   //底部对顶部
+        map[x][y].bottom & map[new_x][new_y].top
+            return true
+    2   //左边对右边
+        map[x][y].left & map[new_x][new_y].right
+            return true
+    3   //右边对左边
+        map[x][y].right & map[new_x][new_y].left
+            return true
+    return false
