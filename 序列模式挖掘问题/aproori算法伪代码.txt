@@ -3,24 +3,26 @@ Apriori
     L = first_candidate_item(D);
     C1 = get_frequent_item(f1, D)
 
-    For(k=2; F[k-2].len > 1 ;k++){
+    For(k=2; L[k-1].len > 1 ;k++){
         // 产生候选k-项集
-        C += get_candidate(L[K - 2], K)
+        C += get_candidate(L[K - 1], K)
         //产生频繁k-项集
         L += get_frequent_item(C[-1], D)
     }
 	return L, C
 
 get_candidate (Lk, K)
-      for each 项集 L1 属于 FK
-         for each 项集 L2 属于 FK
-            l1 = L1[1, k-1]
-            l2 = L2[1, k-1]
+      for each 项集 L1 属于 LK
+         for each 项集 L2 属于 LK
+            L1 = L1[1, k-1]
+            L2 = L2[1, k-1]
+            L1.sort()
+            L2.sort()
             //前k-1项相等
-            if l1 = l2
-                new = L1 ^ L2
-                c = L1 | L2    // 连接步：产生候选
-                for each 项集 x 属于 Fk
+            if L1 = L2
+                new = LK[i] ^ LK[j]
+                c = LK[i] | LK[j]    // 连接步：产生候选
+                for each 项集 x 属于 Lk
                 //若k-1项集中已经存在子集c则进行剪枝
                 if new in x and c not in Ck then
                     add c to Ck
@@ -29,7 +31,7 @@ get_candidate (Lk, K)
 get_frequent_item(Ck, D)
     //统计所有项集的支持度
     for each 项集 l1 属于 Ck
-        for each 项集 l2 属于 D
+        for each 项集 l2 属于 DAA
             if li is in l2
                 Lk[l1]++
     //删除所有的支持度小于 min_support 的项

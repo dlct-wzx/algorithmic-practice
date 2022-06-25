@@ -1,8 +1,34 @@
 #include<iostream>
 #include<string>
 #include<fstream>
+#include <sys/timeb.h>
+#include <iomanip>
+#include <ctime>
+#include <sstream>
 #define MAXSIZE 1000
 using namespace std;
+
+//获取毫秒时间
+long long getCurrentTimeMillis()
+{
+
+    timeb now;
+    ftime(&now);
+    std::stringstream milliStream;
+    // 由于毫秒数不一定是三位数，故设置宽度为3，前面补0
+    milliStream << setw(3) << setfill('0') << right << now.millitm;
+
+    stringstream secStream;
+    secStream << now.time;
+    string timeStr(secStream.str());
+    timeStr.append(milliStream.str());
+
+    long long timeLong;
+    stringstream transStream(timeStr);
+    transStream >> timeLong;
+
+    return timeLong;
+}
 
 //定义方块信息
 class point{
@@ -30,6 +56,7 @@ bool init_by_terminal();        //从命令行读取数据
 point get_new_point(char ch);   //根据字符获取结点
 void solve();                   //问题解决
 void dfs(int x, int y, int label);         //深度优先搜索，回溯
+unsigned long long start_time, end_time;
 
 void solve(){
     system("cls"); //清屏
@@ -45,11 +72,13 @@ void solve(){
         cout<<"\n\n\t\t\t\terror:模式选取错误，请从新选择：";
         cin>>type;
     }
+    start_time =  getCurrentTimeMillis();
+    
     int item = 1;
     system("cls"); //清屏
     while(1){
         cout<<"********************正在读取第 "<<item<<" 农场的数据********************"<<endl;
-        
+
         switch(type){
             case 1:
                 if(!init_by_terminal()) return;
@@ -94,7 +123,10 @@ bool init_by_terminal(){
     cin>>n>>m;
     char ch;
     if(n == -1 && m == -1) {
-        cout<<"**************************程序已退出***************************";
+        cout<<"**************************程序已退出***************************"<<endl;
+        end_time = getCurrentTimeMillis();
+        cout<<end_time<<endl;
+        cout<<end_time-start_time<<endl;
         return false;
     }
     for(int i = 0;i < n;i++){
@@ -116,7 +148,9 @@ bool init_by_txt(){
     cout<<"农场的高和宽分别为: "<<n<<" "<<m<<endl;
     char ch;
     if(n == -1 && m == -1) {
-        cout<<"**************************程序已退出***************************";
+        cout<<"**************************程序已退出***************************"<<endl;
+        end_time = getCurrentTimeMillis();
+        cout<<"程序运行时间为："<<end_time-start_time<<endl;
         return false;
     }
     for(int i = 0;i < n;i++){

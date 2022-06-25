@@ -8,6 +8,7 @@
 -------------------------------------------------
 """
 import time
+import datetime
 
 filepath = './test.txt'
 set_min_support = 0.05
@@ -119,16 +120,6 @@ def Apriori(dataset, min_support, length):
     return F, L
 
 
-# def generateRules(sup_data, min_cof=0.1):
-#     relus = {}
-#     for item in sup_data:
-#         if len(item) == 1:
-#             continue
-#         if sup_data[item] / sup_data[(item[0], )] >= min_cof:
-#             relus[item] = sup_data[item] / sup_data[(item[0], )]
-#     return relus
-
-
 if __name__ == '__main__':
     t1 = time.time()
     dataset, length = readfile(path=filepath)
@@ -144,4 +135,4 @@ if __name__ == '__main__':
             print(item[i], end="")
         print('  支持度为: ' + str(L.get(item) / length))
     t2 = time.time()
-    print(int(round(t2 - t1)))
+    print("运行时间为：" + str(int(round((t2 - t1)*1000))))
